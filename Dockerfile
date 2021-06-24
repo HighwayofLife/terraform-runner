@@ -16,7 +16,7 @@ RUN go build -o ./bin/terraform-runner-api ./cmd/...
 FROM alpine:3.14.0
 
 ARG APP_VERSION=0.1
-ARG TERRAGRUNT_VERSION=0.30.70
+ARG TERRAGRUNT_VERSION=0.31.0
 
 RUN apk add --no-cache ca-certificates git curl \
   && apk add --update --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/community \
