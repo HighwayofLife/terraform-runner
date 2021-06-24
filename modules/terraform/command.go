@@ -1,4 +1,4 @@
-package main
+package terraform
 
 import (
 	"bufio"
@@ -28,7 +28,7 @@ func generateCommand(options *terraform.Options, args ...string) shell.Command {
 func RunTerraformCommand(additionalOptions *terraform.Options, args ...string) string {
 	out, err := RunTerraformCommandE(additionalOptions, args...)
 	if err != nil {
-		logger.Fatal(err.Error())
+		return ""
 	}
 	return out
 }
@@ -43,7 +43,7 @@ func RunTerraformCommandE(additionalOptions *terraform.Options, additionalArgs .
 func RunCommandAndGetOutput(command shell.Command) string {
 	output, err := RunCommandAndGetOutputE(command)
 	if err != nil {
-		logger.Fatalf(err.Error())
+		return ""
 	}
 	return output
 }
@@ -59,7 +59,7 @@ func RunCommandAndGetOutputE(command shell.Command) (string, error) {
 func GetExitCodeForTerraformCommand(additionalOptions *terraform.Options, args ...string) int {
 	exitCode, err := GetExitCodeForTerraformCommandE(additionalOptions, args...)
 	if err != nil {
-		logger.Fatalf(err.Error())
+		return 1
 	}
 	return exitCode
 }
@@ -67,7 +67,7 @@ func GetExitCodeForTerraformCommand(additionalOptions *terraform.Options, args .
 func GetExitCodeForTerraformCommandE(additionalOptions *terraform.Options, additionalArgs ...string) (int, error) {
 	options, args := terraform.GetCommonOptions(additionalOptions, additionalArgs...)
 
-	logger.Infof("Running %s with args %v", options.TerraformBinary, args)
+	// logger.Infof("Running %s with args %v", options.TerraformBinary, args)
 	cmd := generateCommand(options, args...)
 	_, err := RunCommandAndGetOutputE(cmd)
 	if err == nil {
@@ -83,7 +83,7 @@ func GetExitCodeForTerraformCommandE(additionalOptions *terraform.Options, addit
 }
 
 func runCommand(command shell.Command) (*output, error) {
-	logger.Infof("Running command %s with args %s", command.Command, command.Args)
+	// logger.Infof("Running command %s with args %s", command.Command, command.Args)
 
 	cmd := exec.Command(command.Command, command.Args...)
 
@@ -164,7 +164,7 @@ func readData(reader *bufio.Reader, writer io.StringWriter) error {
 			break
 		}
 
-		logger.Infof(line)
+		// logger.Infof(line)
 		if _, err := writer.WriteString(line); err != nil {
 			return err
 		}

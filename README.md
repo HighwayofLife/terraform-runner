@@ -41,11 +41,24 @@ How it Works
 1. cURL call to API
 2. webhook trigger (such as from GHE or Gantry)
 
+environments/nonprod (module of modules)
+environments/nonprod/storage (single module)
+
+environments/nonprod/dev-cluster (module of modules -- run-all)
+
+environments/nonprod/dev-cluster/azure
+environments/nonprod/dev-cluster/rke
+environments/nonprod/dev-cluster/configs
+environments/nonprod/dev-cluster/rancher
+
+
 ### API Commands:
-1. plan-all
-2. plan/module
-3. apply-all
-4. apply/module
+1. plan-all (terragrunt)
+2. plan/module (terragrunt or terraform)
+3. apply-all (terragrunt)
+4. apply/module (terragrunt or terraform)
+5. update (git pull)
+    * ...
 
 Limitations
 -----------

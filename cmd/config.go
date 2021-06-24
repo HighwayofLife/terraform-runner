@@ -10,12 +10,6 @@ import (
 // ENV TF_IN_AUTOMATION=true
 // ENV CHECKPOINT_DISABLE=true
 
-const TerraformPlanChangesPresentExitCode = 2
-
-const DefaultSuccessExitCode = 0
-
-const DefaultErrorExitCode = 1
-
 type config struct {
 	Port           string `env:"TF_RUNNER_API_PORT" envDefault:"8080"`
 	WorkDir        string `env:"TF_RUNNER_WORKDIR" envDefault:"/var/workspace"`

@@ -1,11 +1,15 @@
-package main
+package terraform
 
-import "github.com/gruntwork-io/terratest/modules/terraform"
+import (
+	"errors"
+
+	"github.com/gruntwork-io/terratest/modules/terraform"
+)
 
 func InitAndPlan(options *terraform.Options) string {
 	out, err := InitAndPlanE(options)
 	if err != nil {
-		logger.Fatalf(err.Error())
+		return ""
 	}
 
 	return out
@@ -13,7 +17,7 @@ func InitAndPlan(options *terraform.Options) string {
 
 func InitAndPlanE(options *terraform.Options) (string, error) {
 	if _, err := InitE(options); err != nil {
-		logger.Fatalf(err.Error())
+		return "", err
 	}
 
 	return PlanE(options)
@@ -22,7 +26,7 @@ func InitAndPlanE(options *terraform.Options) (string, error) {
 func Plan(options *terraform.Options) string {
 	out, err := PlanE(options)
 	if err != nil {
-		logger.Fatalf(err.Error())
+		return ""
 	}
 
 	return out
@@ -35,7 +39,8 @@ func PlanE(options *terraform.Options) (string, error) {
 func TgPlanAll(options *terraform.Options) string {
 	out, err := TgPlanAllE(options)
 	if err != nil {
-		logger.Fatalf(err.Error())
+		// logger.Fatalf(err.Error())
+		return ""
 	}
 
 	return out
@@ -43,7 +48,7 @@ func TgPlanAll(options *terraform.Options) string {
 
 func TgPlanAllE(options *terraform.Options) (string, error) {
 	if options.TerraformBinary != "terragrunt" {
-		logger.Fatalf("terragrunt must be set as the TerraformBinary to use this method")
+		return "", errors.New("terragrunt must be set as the TerraformBinary to use this method")
 	}
 
 	return RunTerraformCommandE(options, terraform.FormatArgs(options, "run-all", "plan", "--input=false", "--lock=true")...)

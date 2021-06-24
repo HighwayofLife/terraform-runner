@@ -1,4 +1,4 @@
-package main
+package terraform
 
 import (
 	"fmt"
@@ -9,7 +9,8 @@ import (
 func Init(options *terraform.Options) string {
 	out, err := InitE(options)
 	if err != nil {
-		logger.Fatal(err.Error())
+		// logger.Fatal(err.Error())
+		return ""
 	}
 
 	return out
