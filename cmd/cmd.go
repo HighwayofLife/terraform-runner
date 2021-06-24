@@ -43,7 +43,7 @@ func RunTerraformCommandE(additionalOptions *terraform.Options, additionalArgs .
 func RunCommandAndGetOutput(command shell.Command) string {
 	output, err := RunCommandAndGetOutputE(command)
 	if err != nil {
-		return ""
+		logger.Fatalf(err.Error())
 	}
 	return output
 }
@@ -54,6 +54,32 @@ func RunCommandAndGetOutputE(command shell.Command) (string, error) {
 		return output.Combined(), &ErrWithCmdOutput{err, output}
 	}
 	return output.Combined(), nil
+}
+
+func GetExitCodeForTerraformCommand(additionalOptions *terraform.Options, args ...string) int {
+	exitCode, err := GetExitCodeForTerraformCommandE(additionalOptions, args...)
+	if err != nil {
+		logger.Fatalf(err.Error())
+	}
+	return exitCode
+}
+
+func GetExitCodeForTerraformCommandE(additionalOptions *terraform.Options, additionalArgs ...string) (int, error) {
+	options, args := terraform.GetCommonOptions(additionalOptions, additionalArgs...)
+
+	logger.Infof("Running %s with args %v", options.TerraformBinary, args)
+	cmd := generateCommand(options, args...)
+	_, err := RunCommandAndGetOutputE(cmd)
+	if err == nil {
+		return DefaultSuccessExitCode, nil
+	}
+
+	exitCode, getExitCodeErr := shell.GetExitCodeForRunCommandError(err)
+	if getExitCodeErr == nil {
+		return exitCode, nil
+	}
+
+	return DefaultErrorExitCode, getExitCodeErr
 }
 
 func runCommand(command shell.Command) (*output, error) {

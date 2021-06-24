@@ -1,4 +1,4 @@
-module scm.starbucks.com/highwayoflife/terraform-runner-api
+module github.com/highwayoflife/terraform-runner
 
 go 1.16
 

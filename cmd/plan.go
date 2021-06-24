@@ -5,7 +5,7 @@ import "github.com/gruntwork-io/terratest/modules/terraform"
 func InitAndPlan(options *terraform.Options) string {
 	out, err := InitAndPlanE(options)
 	if err != nil {
-		return ""
+		logger.Fatalf(err.Error())
 	}
 
 	return out
@@ -13,7 +13,7 @@ func InitAndPlan(options *terraform.Options) string {
 
 func InitAndPlanE(options *terraform.Options) (string, error) {
 	if _, err := InitE(options); err != nil {
-		return "", err
+		logger.Fatalf(err.Error())
 	}
 
 	return PlanE(options)
@@ -22,7 +22,7 @@ func InitAndPlanE(options *terraform.Options) (string, error) {
 func Plan(options *terraform.Options) string {
 	out, err := PlanE(options)
 	if err != nil {
-		return ""
+		logger.Fatalf(err.Error())
 	}
 
 	return out
@@ -35,7 +35,7 @@ func PlanE(options *terraform.Options) (string, error) {
 func TgPlanAll(options *terraform.Options) string {
 	out, err := TgPlanAllE(options)
 	if err != nil {
-		return ""
+		logger.Fatalf(err.Error())
 	}
 
 	return out

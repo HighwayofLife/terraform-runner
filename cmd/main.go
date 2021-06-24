@@ -7,9 +7,9 @@ import (
 
 var (
 	info = AppInfo{
-		Name:        "terraform-runner-api",
+		Name:        "terraform-runner",
 		Description: "API to run Terraform code in Go runner microservice",
-		URL:         "https://scm.starbucks.com/davlewis/terraform-runner-api",
+		URL:         "https://github.com/highwayoflife/terraform-runner",
 	}
 
 	cfg config
