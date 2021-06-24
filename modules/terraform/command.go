@@ -71,7 +71,7 @@ func GetExitCodeForTerraformCommandE(additionalOptions *terraform.Options, addit
 	cmd := generateCommand(options, args...)
 	_, err := RunCommandAndGetOutputE(cmd)
 	if err == nil {
-		return DefaultSuccessExitCode, nil
+		return terraform.DefaultSuccessExitCode, nil
 	}
 
 	exitCode, getExitCodeErr := shell.GetExitCodeForRunCommandError(err)
@@ -79,7 +79,7 @@ func GetExitCodeForTerraformCommandE(additionalOptions *terraform.Options, addit
 		return exitCode, nil
 	}
 
-	return DefaultErrorExitCode, getExitCodeErr
+	return terraform.DefaultErrorExitCode, getExitCodeErr
 }
 
 func runCommand(command shell.Command) (*output, error) {
